@@ -37,7 +37,8 @@
  -- CREATE
  
  /*
-    CREATE TABLE ushe_passport_2019
+
+    CREATE TABLE ushe_passport_2020
     (
       pidm        VARCHAR2(8),
       p_id        VARCHAR2(9),
@@ -47,57 +48,58 @@
       p_suffix    VARCHAR2(4),
       p_date      VARCHAR2(8),
       p_type      VARCHAR2(6),
-      p_banner_id VARCHAR2(8),
+      p_banner_id VARCHAR2(9),
       p_fis_year  VARCHAR2(4),
-      p_term      VARCHAR2(6)   
+      p_term      VARCHAR2(6)
     );
  */
  ------------------------------------------------------------------------------------------------------------
- -- INSERT 
- 
-    TRUNCATE TABLE ushe_passport_2019;
-    INSERT INTO ushe_passport_2019
+ -- INSERT
+
+    TRUNCATE TABLE ushe_passport_2020;
+    INSERT INTO ushe_passport_2020
     SELECT DISTINCT
         -- shrtmcm_comment,
            shrtmcm_pidm,
            nvl(spbpers_ssn,spriden_id),
            spriden_last_name,
-           substr(spriden_first_name,1,15),
-           spriden_mi,
-           substr(spbpers_name_suffix, 1, 4),
+           CAST(spriden_first_name AS VARCHAR(15)),
+           CAST(spriden_mi AS VARCHAR2(15)),
+           CAST(spbpers_name_suffix AS VARCHAR2(4)),
            to_char(shrtmcm_effective_date,'YYYYMMDD'),
            'P2',
-           spriden_id,
-           '1819',
-           '201923'
+           'D' || spriden_id,
+           '1920',
+           '202023'
     FROM   shrtmcm, spriden, spbpers
     WHERE  shrtmcm_pidm = spriden_pidm
     AND    shrtmcm_pidm = spbpers_pidm
     AND    spriden_change_ind IS NULL
-    AND    upper(shrtmcm_comment) LIKE '%PASSPORT%' 
-    AND    to_char(shrtmcm_effective_date,'YYYYMMDD') > '20180630'; -- Update Yearly.
- 
+    AND    upper(shrtmcm_comment) LIKE '%PASSPORT%'
+    AND    to_char(shrtmcm_effective_date,'YYYYMMDD') BETWEEN '20190630' AND '20200701'; -- Update Yearly.
+
  ------------------------------------------------------------------------------------------------------------
  -- Export
- 
-    SELECT '3671' AS p_inst, 
-           p_id, 
-           p_last, 
-           p_first, 
-           p_middle, 
+
+    SELECT '3671' AS p_inst,
+           p_id,
+           p_last,
+           p_first,
+           p_middle,
            p_suffix,
-           p_date, 
+           p_date,
            p_type,
            p_banner_id,
            p_fis_year,
            p_term
-    FROM   ushe_passport_2019;
- 
+    FROM   ushe_passport_2020;
+
  -- Confirm
     SELECT p_date, count(*)
-    FROM   ushe_passport_2019
+    FROM   ushe_passport_2020
     GROUP  BY p_date
     ORDER  BY p_date;
-    
+
  ------------------------------------------------------------------------------------------------------------
  -- end of file
+
