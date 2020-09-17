@@ -78,6 +78,8 @@
     AND    upper(shrtmcm_comment) LIKE '%PASSPORT%'
     AND    to_char(shrtmcm_effective_date,'YYYYMMDD') BETWEEN '20190630' AND '20200701'; -- Update Yearly.
 
+    COMMIT;
+
  ------------------------------------------------------------------------------------------------------------
  -- Export
 
