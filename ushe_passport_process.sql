@@ -78,7 +78,35 @@
     AND    upper(shrtmcm_comment) LIKE '%PASSPORT%'
     AND    to_char(shrtmcm_effective_date,'YYYYMMDD') BETWEEN '20190630' AND '20200701'; -- Update Yearly.
 
+
     COMMIT;
+
+/* Manual Fixes */
+UPDATE ushe_passport_2020
+SET p_id = '000353948'
+WHERE p_id = '855041470';
+
+UPDATE ushe_passport_2020
+SET p_id = '000369609'
+WHERE p_id = '064576257';
+
+UPDATE ushe_passport_2020
+SET p_id = '000354774'
+WHERE p_id = '781721889';
+
+UPDATE ushe_passport_2020
+SET p_id = '000365814'
+WHERE p_id = '787012511';
+
+UPDATE ushe_passport_2020
+SET p_id = '000369609'
+WHERE p_id = '64576257';
+
+UPDATE ushe_passport_2020
+SET p_id = '000398133'
+WHERE p_id = '369991298';
+
+COMMIT;
 
  ------------------------------------------------------------------------------------------------------------
  -- Export
@@ -93,7 +121,7 @@
            p_type,
            p_banner_id,
            p_fis_year,
-           p_term
+           SUBSTR(p_term,5,1) AS p_term
     FROM   ushe_passport_2020;
 
  -- Confirm
