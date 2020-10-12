@@ -61,7 +61,7 @@
     SELECT DISTINCT
         -- shrtmcm_comment,
            shrtmcm_pidm,
-           nvl(spbpers_ssn,spriden_id),
+           nvl(spbpers_ssn, 'D' || spriden_id),
            spriden_last_name,
            CAST(spriden_first_name AS VARCHAR(15)),
            CAST(spriden_mi AS VARCHAR2(15)),
@@ -106,6 +106,26 @@ UPDATE ushe_passport_2020
 SET p_id = '000398133'
 WHERE p_id = '369991298';
 
+UPDATE ushe_passport_2020
+SET p_id = 'D00353948'
+WHERE p_id = '000353948';
+
+UPDATE ushe_passport_2020
+SET p_id = 'D00354774'
+WHERE p_id = '000354774';
+
+UPDATE ushe_passport_2020
+SET p_id = 'D00365814'
+WHERE p_id = '000365814';
+
+UPDATE ushe_passport_2020
+SET p_id = 'D00369609'
+WHERE p_id = '000369609';
+
+UPDATE ushe_passport_2020
+SET p_id = 'D00398133'
+WHERE p_id = '000398133';
+
 COMMIT;
 
  ------------------------------------------------------------------------------------------------------------
@@ -133,3 +153,10 @@ COMMIT;
  ------------------------------------------------------------------------------------------------------------
  -- end of file
 
+select *
+from ENROLL.ushe_passport_2020
+WHERE p_id  = '000353948';
+
+select a. s_id, a.*
+from students03@dscir a
+WHERE s_banner_id = '00353948';
